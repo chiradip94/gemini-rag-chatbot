@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import './ChatApp.css';
+import { getOrCreateSessionId } from './session';
 
 function ChatApp() {
   const [input, setInput] = useState('');
@@ -44,7 +45,15 @@ function ChatApp() {
     // Check if the input is not just whitespace
     if (input.trim()) {
       // Convert the input to a JSON string
-      const message = JSON.stringify({ input });
+      const session_id = getOrCreateSessionId().toString()
+      var json_data = {
+        "input": input,
+        "session_id": session_id
+      }
+      //const message = JSON.stringify({ input });
+      const message = JSON.stringify(json_data);
+
+      console.log(message)
 
       // Send the message through the WebSocket connection
       websocket.current.send(message);
