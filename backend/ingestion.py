@@ -12,7 +12,9 @@ QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 QDRANT_URL = os.getenv("QDRANT_URL")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME","chatbot")
 
-loader = TextLoader("files/sample.txt")
+
+file_name = input("Enter the file name to be added to Knowledge Base: ")
+loader = TextLoader(f"files/{file_name}")
 docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
@@ -39,18 +41,43 @@ client = QdrantClient(
     api_key=QDRANT_API_KEY,
 )
 
-client.create_collection(
-    collection_name=COLLECTION_NAME,
-    vectors_config=models.VectorParams(size=size, distance=models.Distance.COSINE),
-)
 
-print(client.get_collections())
+def new_collection():
+    client.create_collection(
+        collection_name=COLLECTION_NAME,
+        vectors_config=models.VectorParams(size=size, distance=models.Distance.COSINE),
+    )
 
-qdrant = Qdrant.from_documents(
-    chunks,
-    embedding=embeddings, 
-    url=QDRANT_URL,
-    api_key=QDRANT_API_KEY,
-    collection_name=COLLECTION_NAME,
-    prefer_grpc=True,
-)
+    print(client.get_collections())
+
+    qdrant = Qdrant.from_documents(
+        chunks,
+        embedding=embeddings, 
+        url=QDRANT_URL,
+        api_key=QDRANT_API_KEY,
+        collection_name=COLLECTION_NAME,
+        prefer_grpc=True,
+    )
+    print("{COLLECTION_NAME} created and data Injected successfully.")
+
+def add_data_to_collection():
+
+    client = QdrantClient(
+            url=QDRANT_URL,
+            api_key=QDRANT_API_KEY,
+        )
+    qdrant = Qdrant(
+        embeddings=embeddings, 
+        client=client,
+        collection_name=COLLECTION_NAME
+    )
+    qdrant.add_documents(chunks)
+    print("Data Injected successfully in {COLLECTION_NAME}.")
+
+options = int(input("Type 1 for collection creation and 2 for ingestion: "))
+if options == 1:
+    new_collection()
+elif options == 2:
+    add_data_to_collection()
+else:
+    print("Invalid Input")
