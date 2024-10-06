@@ -1,0 +1,7 @@
+python-dotenv
+langchain
+langchain_community
+google-generativeai
+langchain-google-genai
+langchain_qdrant
+websockets
