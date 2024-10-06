@@ -53,8 +53,6 @@ function ChatApp() {
       //const message = JSON.stringify({ input });
       const message = JSON.stringify(json_data);
 
-      console.log(message)
-
       // Send the message through the WebSocket connection
       websocket.current.send(message);
 

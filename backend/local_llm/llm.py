@@ -122,8 +122,6 @@ class WebSocketServer:
                 try:
                     data = json.loads(message)
                     session_id = data.get("session_id", "default_session")
-                    print(f"The sesion id is {session_id}")
-                    print(data)
                     input_text = data["input"]
 
                     answer = self.model.get_answer(input_text, session_id)
