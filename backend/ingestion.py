@@ -58,7 +58,7 @@ def new_collection():
         collection_name=COLLECTION_NAME,
         prefer_grpc=True,
     )
-    print("{COLLECTION_NAME} created and data Injected successfully.")
+    print(f"{COLLECTION_NAME} created and data Injected successfully.")
 
 def add_data_to_collection():
 
@@ -72,7 +72,7 @@ def add_data_to_collection():
         collection_name=COLLECTION_NAME
     )
     qdrant.add_documents(chunks)
-    print("Data Injected successfully in {COLLECTION_NAME}.")
+    print(f"Data Injected successfully in {COLLECTION_NAME}.")
 
 options = int(input("Type 1 for collection creation and 2 for ingestion: "))
 if options == 1:
