@@ -6,7 +6,7 @@ import logging
 choice = int(input("Type 1 for gemini LLM and 2 for Ollama: "))
 
 if choice == 1:
-    from .llm import LlmChatBot, WebSocketServer
+    from llm import LlmChatBot, WebSocketServer
     model = LlmChatBot()
     server = WebSocketServer("localhost", int(os.getenv("SERVER_PORT",8081)), model)
     asyncio.run(server.start_server())
