@@ -33,7 +33,7 @@ class LlmChatBot:
 
     def get_llm(self):
         GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-        llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro-latest", google_api_key=GOOGLE_API_KEY)
+        llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", google_api_key=GOOGLE_API_KEY)
         return llm
 
     def get_retriever(self,collection_name):
